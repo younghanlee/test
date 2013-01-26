@@ -5,7 +5,8 @@ def fileToList(filename):
     outputList = list()
     file = open(filename, 'r')
     for line in file:
-        outputList.append(line.strip())
+        if not line.strip().startswith("#"):
+            outputList.append(line.strip())
     file.close()
     return outputList
 
@@ -46,6 +47,10 @@ def getProbability(inputDict):
     for key in inputDict:
         outputDict[key] = inputDict[key] / totalCounter
     return outputDict
+    
+    
+def getFileList(filename):
+    return fileToList(filename)
     
     
 def main():

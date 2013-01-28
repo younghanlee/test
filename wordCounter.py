@@ -23,19 +23,13 @@ def listToWord(inputList):
 def wordCounter(inputList):
     outputDict = dict()
     for word in inputList:
-        if word in outputDict:
-            outputDict[word] += 1
-        else:
-            outputDict[word] = 1
+        outputDict[word] = outputDict.get(word, 0) + 1
     return outputDict
-    
-    
+
+
 def mergeWordCounter(totalDict, inputDict):
     for key in inputDict:
-        if key in totalDict:
-            totalDict[key] += inputDict[key]
-        else:
-            totalDict[key] = inputDict[key]
+        totalDict[key] = totalDict.get(key, 0) + inputDict[key]
     return totalDict
     
     

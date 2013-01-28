@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from math import log
 
 ALL = 'all'
 
@@ -23,8 +24,11 @@ def listToWord(inputList):
     
 def wordCounter(inputList):
     outputDict = dict()
+    outputDict[ALL] = 0
     for word in inputList:
         outputDict[word] = outputDict.get(word, 1) + 1
+        outputDict[ALL] += 1
+    outputDict[ALL] += len(outputDict) - 1 
     return outputDict
 
 
@@ -56,12 +60,20 @@ def getProbWordGivenClass(wordInClassCounter):
     return outputDict
     
     
+def getProbClassGivenDocument(wordList, probClass, probWordInClass):
+    outputDict = dict()
+    for c in probClass:
+        outputDict[c] = log(probClass[c])
+        for word in wordList:
+            outputDict[c] += log(probWordInClass[c].get(word, 1))
+    return outputDict
+    
+    
 def getProbClass(classCounter):
     outputDict = dict()
     for c in classCounter:
         outputDict[c] = classCounter / float(classCounter[ALL])
     return outputDict
-    
     
     
 def main():

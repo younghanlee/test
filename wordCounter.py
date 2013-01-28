@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+ALL = 'all'
 
 def fileToList(filename):
     outputList = list()
@@ -23,7 +24,7 @@ def listToWord(inputList):
 def wordCounter(inputList):
     outputDict = dict()
     for word in inputList:
-        outputDict[word] = outputDict.get(word, 0) + 1
+        outputDict[word] = outputDict.get(word, 1) + 1
     return outputDict
 
 
@@ -47,6 +48,22 @@ def getFileList(filename):
     return fileToList(filename)
     
     
+def getProbWordGivenClass(wordInClassCounter):
+    outputDict = dict()
+    for c in wordInClassCounter:
+        for word in wordInClassCounter[c]:
+            outputDict[word][c] = wordInClassCounter[c][word] / float(wordInClassCounter[ALL][word])
+    return outputDict
+    
+    
+def getProbClass(classCounter):
+    outputDict = dict()
+    for c in classCounter:
+        outputDict[c] = classCounter / float(classCounter[ALL])
+    return outputDict
+    
+    
+    
 def main():
     lineList = fileToList("sample.txt")
     wordList = listToWord(lineList)
@@ -55,10 +72,11 @@ def main():
     lineList1 = fileToList("sample1.txt")
     wordList1 = listToWord(lineList1)
     wordDict1 = wordCounter(wordList1)
+    totalDict = dict()
+    mergeWordCounter(totalDict, wordDict)
+    mergeWordCounter(totalDict, wordDict1)
 
-    mergeWordCounter(wordDict, wordDict1)
-
-    print getProbability(wordDict)
+    print getProbability(totalDict)
     
     
 if __name__ == "__main__":

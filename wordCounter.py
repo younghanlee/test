@@ -47,6 +47,16 @@ def getProbability(inputDict):
         outputDict[key] = inputDict[key] / totalCounter
     return outputDict
     
+
+def getClassMaxProb(probClass):
+    tmpList = [(probClass[k], k) for k in probClass]
+    tmpList.sort()
+    tmpList.reverse()
+    if len(tmpList) != 0:
+        return tmpList[0][1]
+    else:
+        return None
+    
     
 def getFileList(filename):
     return fileToList(filename)
